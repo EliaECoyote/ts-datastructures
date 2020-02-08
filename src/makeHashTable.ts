@@ -58,3 +58,15 @@ export function makeHashTable<T>() {
     length
   };
 }
+
+function reallyBadHashingFunction(key: number | string) {
+  return typeof key === "string"
+    ? key.charCodeAt(0)
+    : Number(key)
+        .toString()
+        .charCodeAt(0);
+}
+
+function reallyBadHashToIndexFunction(keyHash: number) {
+  return parseInt(keyHash.toString()[1]);
+}
