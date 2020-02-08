@@ -1,15 +1,3 @@
-function someHashingFunction(key: number | string) {
-  return typeof key === "string"
-    ? key.charCodeAt(0)
-    : Number(key)
-        .toString()
-        .charCodeAt(0);
-}
-
-function someHashToIndexFn(keyHash: number) {
-  return keyHash.toString()[1];
-}
-
 type DataItem<T> = [string | number, T];
 
 export function makeHashTable<T>() {
@@ -17,11 +5,11 @@ export function makeHashTable<T>() {
   const data: DataItem<T>[][] = [];
 
   function createHash(key: number | string) {
-    return someHashingFunction(key);
+    return reallyBadHashingFunction(key);
   }
 
   function getIndexFromHash(hash: number) {
-    return someHashToIndexFn(hash);
+    return reallyBadHashToIndexFunction(hash);
   }
 
   // O(1) time complexity (average)
