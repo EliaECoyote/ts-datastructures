@@ -44,7 +44,7 @@ describe("makeHashTable", () => {
     const hashTable = makeHashTable();
     hashTable.add("x", sampleValue);
     hashTable.remove("y");
-    expect(hashTable.length()).toBe(0);
+    expect(hashTable.length()).toBe(1);
   })
 
 });
