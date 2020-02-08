@@ -1,0 +1,19 @@
+{
+  "name": "data_structures",
+  "version": "1.0.0",
+  "description": "js data structures",
+  "main": "index.js",
+  "author": "@EliaECoyote",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "yarn jest",
+    "test-watch": "yarn test --watchAll"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.0",
+    "typescript": "^3.7.5"
+  }
+}
