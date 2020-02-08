@@ -38,7 +38,7 @@ export function makeHashTable<T>() {
     const index = getIndexFromHash(hash);
     if (data[index]) {
       const itemIndex = data[index].findIndex(([itemKey]) => itemKey === key);
-      if (itemIndex != null) {
+      if (itemIndex !== -1) {
         data[index] = data[index]
           .slice(0, itemIndex)
           .concat(data[index].slice(itemIndex + 1));
