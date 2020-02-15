@@ -1,4 +1,4 @@
-import { makeHashTable } from "./makeHashTable";
+import { makeHashTable } from "../makeHashTable";
 
 const sampleValue = { test: true };
 
@@ -30,21 +30,19 @@ describe("makeHashTable", () => {
     const hashTable = makeHashTable();
     hashTable.add("x", sampleValue);
     expect(hashTable.length()).toBe(1);
-  })
+  });
 
-  it ("should decrease length when items are removed", () => {
+  it("should decrease length when items are removed", () => {
     const hashTable = makeHashTable();
     hashTable.add("x", sampleValue);
     hashTable.remove("x");
     expect(hashTable.length()).toBe(0);
-  })
+  });
 
-
-  it ("should not decrease length when not-existing items are removed", () => {
+  it("should not decrease length when not-existing items are removed", () => {
     const hashTable = makeHashTable();
     hashTable.add("x", sampleValue);
     hashTable.remove("y");
     expect(hashTable.length()).toBe(1);
-  })
-
+  });
 });
