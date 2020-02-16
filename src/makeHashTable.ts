@@ -75,9 +75,10 @@ export function makeHashTable<T>() {
 //
 // ⚠️ Warning! ⚠️
 // For simplicity reasons, the following fns are really badly implemented.
-// They represents just a sample, and if they were implemented better, the
-// hashtable performances, for example, for the **get** fn, would become O(1)
-// on average
+// They represents just a sample - if implemented better, they would greatly
+// improve the hashtable performances.
+// A great hashing function, for example, would improve the `get` fn time
+// complexity to an O(1) (on average)
 //
 
 function reallyBadHashingFunction(key: number | string) {
