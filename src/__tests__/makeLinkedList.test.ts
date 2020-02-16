@@ -103,6 +103,34 @@ describe("when invoking the prepend fn...", () => {
   })
 })
 
+describe("when invoking the find fn...", () => {
+  it("should return the correct node value", () => {
+    const linkedList = makeLinkedList("0", "1", "2")
+    expect(linkedList.find(v => v === "0")?.value).toBe("0")
+    expect(linkedList.find(v => v === "1")?.value).toBe("1")
+    expect(linkedList.find(v => v === "2")?.value).toBe("2")
+  })
+
+  it("should be undefined when item is not available", () => {
+    const linkedList = makeLinkedList("0")
+    expect(linkedList.find(v => v === "1")?.value).toBeUndefined()
+  })
+})
+
+describe("when invoking the findIndex fn...", () => {
+  it("should return the correct index", () => {
+    const linkedList = makeLinkedList("0", "1", "2")
+    expect(linkedList.findIndex(v => v === "0")).toBe(0)
+    expect(linkedList.findIndex(v => v === "1")).toBe(1)
+    expect(linkedList.findIndex(v => v === "2")).toBe(2)
+  })
+
+  it("should return -1 if not available", () => {
+    const linkedList = makeLinkedList("0")
+    expect(linkedList.findIndex(v => v === "1")).toBe(-1)
+  })
+})
+
 describe("when invoking the remove fn...", () => {
   it("should remove the element when available", () => {
     const linkedList = makeLinkedList("0", "x", "1")

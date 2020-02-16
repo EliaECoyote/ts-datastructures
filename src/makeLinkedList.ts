@@ -5,7 +5,21 @@ type Node<T> = {
   next?: Node<T> | null
 }
 
-export function makeLinkedList<T>(...initialValues: T[]) {
+export type LinkedList<T> = {
+  element: () => T | undefined
+  get: (index: number) => T | undefined
+  add: (index: number, value: T) => void
+  append: (value: T) => void
+  prepend: (value: T) => void
+  find: (
+    predicate: (value: T) => boolean | null | undefined,
+  ) => Node<T> | undefined
+  findIndex: (predicate: (value: T) => boolean | null | undefined) => number
+  remove: (index: number) => void
+  values: () => Generator<T>
+}
+
+export function makeLinkedList<T>(...initialValues: T[]): LinkedList<T> {
   let head = createHead(initialValues)
 
   /**
@@ -60,6 +74,34 @@ export function makeLinkedList<T>(...initialValues: T[]) {
   }
 
   /**
+   * Retrieves, if available, the 1st `node` that matches the provided
+   * `predicate` callback condition.
+   */
+  function find(predicate: (value: T) => boolean | null | undefined) {
+    let node = head
+    while (node != null) {
+      if (predicate(node.value)) return node
+      node = node.next ?? null
+    }
+    return undefined
+  }
+
+  /**
+   * Retrieves, if available, the 1st node `index` that matches the
+   * provided `predicate` callback condition.
+   */
+  function findIndex(predicate: (value: T) => boolean | null | undefined) {
+    let node = head
+    let index = 0
+    while (node != null) {
+      if (predicate(node.value)) return index
+      index += 1
+      node = node.next ?? null
+    }
+    return -1
+  }
+
+  /**
    * Removes the element at the specified position in this list.
    * @throws {IndexOutOfBoundsError}
    */
@@ -100,6 +142,8 @@ export function makeLinkedList<T>(...initialValues: T[]) {
     add,
     append,
     prepend,
+    find,
+    findIndex,
     remove,
     values,
   }
