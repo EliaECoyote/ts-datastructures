@@ -9,7 +9,7 @@
   "scripts": {
     "test": "yarn jest",
     "test-watch": "yarn test --watchAll",
-    "lint": "tsc --noEmit && eslint '**/*.ts' --fix"
+    "lint": "tsc --noEmit && eslint '**/*.{js,ts}' --fix"
   },
   "devDependencies": {
     "@types/jest": "^25.1.2",
@@ -27,12 +27,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "tsc --noEmit && lint-staged"
     }
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "tsc --noEmit && eslint"
+      "eslint"
     ]
   }
 }
