@@ -1,62 +1,62 @@
-type DataItem<T> = [string | number, T];
+type DataItem<T> = [string | number, T]
 
 export function makeHashTable<T>() {
-  let _length = 0;
-  const data: DataItem<T>[][] = [];
+  let _length = 0
+  const data: DataItem<T>[][] = []
 
   function createHash(key: number | string) {
-    return reallyBadHashingFunction(key);
+    return reallyBadHashingFunction(key)
   }
 
   function getIndexFromHash(hash: number) {
-    return reallyBadHashToIndexFunction(hash);
+    return reallyBadHashToIndexFunction(hash)
   }
 
   // O(1) time complexity (average)
   function add(key: string | number, value: T) {
-    const hash = createHash(key);
-    const index = getIndexFromHash(hash);
-    if (data[index] != null) data[index] = data[index].concat([[key, value]]);
-    else data[index] = [[key, value]];
-    _length += 1;
+    const hash = createHash(key)
+    const index = getIndexFromHash(hash)
+    if (data[index] != null) data[index] = data[index].concat([[key, value]])
+    else data[index] = [[key, value]]
+    _length += 1
   }
 
   // O(1) time complexity (average)
   function get(key: string | number) {
-    const hash = createHash(key);
-    const index = getIndexFromHash(hash);
+    const hash = createHash(key)
+    const index = getIndexFromHash(hash)
     if (data[index]) {
-      const [, value] = data[index].find(([dataKey]) => dataKey === key) ?? [];
-      return value;
+      const [, value] = data[index].find(([dataKey]) => dataKey === key) ?? []
+      return value
     }
-    return undefined;
+    return undefined
   }
 
   // O(1) time complexity (average)
   function remove(key: string | number) {
-    const hash = createHash(key);
-    const index = getIndexFromHash(hash);
+    const hash = createHash(key)
+    const index = getIndexFromHash(hash)
     if (data[index]) {
-      const itemIndex = data[index].findIndex(([itemKey]) => itemKey === key);
+      const itemIndex = data[index].findIndex(([itemKey]) => itemKey === key)
       if (itemIndex !== -1) {
         data[index] = data[index]
           .slice(0, itemIndex)
-          .concat(data[index].slice(itemIndex + 1));
-        _length -= 1;
+          .concat(data[index].slice(itemIndex + 1))
+        _length -= 1
       }
     }
   }
 
   function length() {
-    return _length;
+    return _length
   }
 
   return {
     add,
     get,
     remove,
-    length
-  };
+    length,
+  }
 }
 
 function reallyBadHashingFunction(key: number | string) {
@@ -64,9 +64,9 @@ function reallyBadHashingFunction(key: number | string) {
     ? key.charCodeAt(0)
     : Number(key)
         .toString()
-        .charCodeAt(0);
+        .charCodeAt(0)
 }
 
 function reallyBadHashToIndexFunction(keyHash: number) {
-  return parseInt(keyHash.toString()[1]);
+  return parseInt(keyHash.toString()[1])
 }
