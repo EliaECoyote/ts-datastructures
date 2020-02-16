@@ -1,11 +1,21 @@
-type DataItem<T> = [string | number, T]
+import { LinkedList, makeLinkedList } from "./makeLinkedList"
 
-export function makeHashTable<T>() {
+type Key = string | number | symbol
+
+type DataItem<T> = [Key, T]
+
+type HashTable<T> = {
+  set: (key: Key, value: T) => void
+  get: (key: Key) => T | undefined
+  remove: (key: Key) => void
+  length: () => number
+}
+
+export function makeHashTable<T>(): HashTable<T> {
   let _length = 0
-  // TODO: use a linkedlist to store key-value pairs at specific index
-  const data: DataItem<T>[][] = []
+  const data: LinkedList<DataItem<T>>[] = []
 
-  function createHash(key: number | string) {
+  function createHash(key: Key) {
     return reallyBadHashingFunction(key)
   }
 
@@ -16,14 +26,14 @@ export function makeHashTable<T>() {
   /**
    * Replaces the element in the specified index with `value`
    */
-  function set(key: string | number, value: T) {
+  function set(key: Key, value: T) {
     const hash = createHash(key)
     const index = getIndexFromHash(hash)
-    if (data[index] == null) data[index] = [[key, value]]
+    if (data[index] == null) data[index] = makeLinkedList([key, value])
     else {
-      const node = data[index].find(([nodeKey]) => nodeKey === key)
-      if (node) node[1] = value
-      else data[index] = data[index].concat([[key, value]])
+      const node = data[index].find(item => item[0] === key)
+      if (node) node.value[1] = value
+      else data[index].prepend([key, value])
     }
     _length += 1
   }
@@ -31,28 +41,22 @@ export function makeHashTable<T>() {
   /**
    * Retrieves the element with the specified `key`
    */
-  function get(key: string | number) {
+  function get(key: Key) {
     const hash = createHash(key)
     const index = getIndexFromHash(hash)
-    if (data[index]) {
-      const [, value] = data[index].find(([dataKey]) => dataKey === key) ?? []
-      return value
-    }
-    return undefined
+    if (data[index]) return data[index].find(item => item[0] === key)?.value[1]
   }
 
   /**
    * Removes the element with the specified `key`
    */
-  function remove(key: string | number) {
+  function remove(key: Key) {
     const hash = createHash(key)
     const index = getIndexFromHash(hash)
     if (data[index]) {
-      const itemIndex = data[index].findIndex(([itemKey]) => itemKey === key)
+      const itemIndex = data[index].findIndex(item => item[0] === key)
       if (itemIndex !== -1) {
-        data[index] = data[index]
-          .slice(0, itemIndex)
-          .concat(data[index].slice(itemIndex + 1))
+        data[index].remove(itemIndex)
         _length -= 1
       }
     }
@@ -81,7 +85,7 @@ export function makeHashTable<T>() {
 // complexity to an O(1) (on average)
 //
 
-function reallyBadHashingFunction(key: number | string) {
+function reallyBadHashingFunction(key: Key) {
   return typeof key === "string"
     ? key.charCodeAt(0)
     : Number(key)
