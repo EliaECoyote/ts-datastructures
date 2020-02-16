@@ -2,6 +2,7 @@ type DataItem<T> = [string | number, T]
 
 export function makeHashTable<T>() {
   let _length = 0
+  // TODO: use a linkedlist to store key-value pairs at specific index
   const data: DataItem<T>[][] = []
 
   function createHash(key: number | string) {
@@ -12,16 +13,24 @@ export function makeHashTable<T>() {
     return reallyBadHashToIndexFunction(hash)
   }
 
-  // O(1) time complexity (average)
-  function add(key: string | number, value: T) {
+  /**
+   * Replaces the element in the specified index with `value`
+   */
+  function set(key: string | number, value: T) {
     const hash = createHash(key)
     const index = getIndexFromHash(hash)
-    if (data[index] != null) data[index] = data[index].concat([[key, value]])
-    else data[index] = [[key, value]]
+    if (data[index] == null) data[index] = [[key, value]]
+    else {
+      const node = data[index].find(([nodeKey]) => nodeKey === key)
+      if (node) node[1] = value
+      else data[index] = data[index].concat([[key, value]])
+    }
     _length += 1
   }
 
-  // O(1) time complexity (average)
+  /**
+   * Retrieves the element with the specified `key`
+   */
   function get(key: string | number) {
     const hash = createHash(key)
     const index = getIndexFromHash(hash)
@@ -32,7 +41,9 @@ export function makeHashTable<T>() {
     return undefined
   }
 
-  // O(1) time complexity (average)
+  /**
+   * Removes the element with the specified `key`
+   */
   function remove(key: string | number) {
     const hash = createHash(key)
     const index = getIndexFromHash(hash)
@@ -51,13 +62,23 @@ export function makeHashTable<T>() {
     return _length
   }
 
+  // TODO: Add key / values iterable generators!
+
   return {
-    add,
+    set,
     get,
     remove,
     length,
   }
 }
+
+//
+// ⚠️ Warning! ⚠️
+// For simplicity reasons, the following fns are really badly implemented.
+// They represents just a sample, and if they were implemented better, the
+// hashtable performances, for example, for the **get** fn, would become O(1)
+// on average
+//
 
 function reallyBadHashingFunction(key: number | string) {
   return typeof key === "string"
