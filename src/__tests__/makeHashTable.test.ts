@@ -9,7 +9,7 @@ describe("when invoking the set fn...", () => {
 
   it("should not retrieve unavailable values", () => {
     const hashTable = makeHashTable()
-    expect(hashTable.get("x")).toBe(undefined)
+    expect(hashTable.get("x")).toBeUndefined()
   })
 
   it("should overwrite existing values", () => {
