@@ -5,26 +5,6 @@ type Node<T> = {
   next?: Node<T> | null
 }
 
-function getLastNode<T>(head: Node<T>): Node<T> {
-  let node = head
-  while (node.next != null) {
-    node = node.next
-  }
-  return node
-}
-
-function createHead<T>(values: T[]): Node<T> | null {
-  let head: Node<T> | null = null
-  let prevNode: Node<T> | null = null
-  for (const value of values) {
-    const node = { value }
-    if (prevNode == null) head = node
-    else prevNode.next = node
-    prevNode = node
-  }
-  return head
-}
-
 export function makeLinkedList<T>(...initialValues: T[]) {
   let head = createHead(initialValues)
 
@@ -123,4 +103,24 @@ export function makeLinkedList<T>(...initialValues: T[]) {
     remove,
     values,
   }
+}
+
+function getLastNode<T>(head: Node<T>): Node<T> {
+  let node = head
+  while (node.next != null) {
+    node = node.next
+  }
+  return node
+}
+
+function createHead<T>(values: T[]): Node<T> | null {
+  let head: Node<T> | null = null
+  let prevNode: Node<T> | null = null
+  for (const value of values) {
+    const node = { value }
+    if (prevNode == null) head = node
+    else prevNode.next = node
+    prevNode = node
+  }
+  return head
 }
