@@ -1,11 +1,15 @@
 {
-  "name": "data_structures",
+  "name": "ts-datastructures",
   "version": "1.0.0",
-  "description": "js data structures",
+  "description": "ts data structures",
   "main": "index.js",
   "author": "@EliaECoyote",
   "license": "MIT",
   "private": false,
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/EliaECoyote/ts-datastructures"
+  },
   "scripts": {
     "test": "yarn jest",
     "test-watch": "yarn test --watchAll",
