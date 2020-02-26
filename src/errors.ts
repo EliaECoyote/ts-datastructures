@@ -4,3 +4,10 @@ export class IndexOutOfBoundsError extends Error {
     this.name = "IndexOutOfBoundsError"
   }
 }
+
+export class NoSuchElementError extends Error {
+  constructor() {
+    super("No such element")
+    this.name = "NoSuchElementError"
+  }
+}
