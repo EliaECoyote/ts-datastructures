@@ -62,6 +62,7 @@ export function makeLinkedList<T>(...initialValues: T[]): LinkedList<T> {
    * Appends the specified element to the end of this list.
    */
   function append(value: T) {
+    // TODO: store tail in order to add in O(1) time
     if (head == null) head = { value }
     else getLastNode(head).next = { value }
   }
