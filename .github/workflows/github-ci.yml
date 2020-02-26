@@ -10,5 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: yarn install
-      - name: Run tests
-        run: yarn test
+      - run: yarn tsc --noEmit
+      - run: yarn test
+      - run: yarn lint
