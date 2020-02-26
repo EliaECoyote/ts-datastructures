@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn install
+      - name: Run tests
+        run: yarn test
