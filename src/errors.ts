@@ -11,3 +11,10 @@ export class NoSuchElementError extends Error {
     this.name = "NoSuchElementError"
   }
 }
+
+export class EmptyStackError extends Error {
+  constructor() {
+    super("Empty stack")
+    this.name = "EmptyStackError"
+  }
+}
