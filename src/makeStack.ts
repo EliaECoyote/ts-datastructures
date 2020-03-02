@@ -1,7 +1,14 @@
 import { makeLinkedList } from "./makeLinkedList"
 import { EmptyStackError } from "./errors"
 
-export function makeStack<T>(...initialValues: T[]) {
+export type Stack<T> = {
+  peek: () => T | undefined
+  push: (item: T) => void
+  pop: () => T
+  isEmpty: () => boolean
+}
+
+export function makeStack<T>(...initialValues: T[]): Stack<T> {
   const linkedList = makeLinkedList<T>()
   initialValues.forEach(linkedList.prepend)
 
