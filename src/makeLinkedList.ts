@@ -14,6 +14,7 @@ export type LinkedList<T> = {
   find: (
     predicate: (value: T) => boolean | null | undefined,
   ) => Node<T> | undefined
+  isEmpty(): boolean
   findIndex: (predicate: (value: T) => boolean | null | undefined) => number
   remove: (index: number) => void
   values: () => Generator<T>
@@ -137,9 +138,17 @@ export function makeLinkedList<T>(...initialValues: T[]): LinkedList<T> {
     if (node) yield node.value
   }
 
+  /**
+   * Returns true if linked list has no nodes
+   */
+  function isEmpty() {
+    return head == null
+  }
+
   return {
     element,
     get,
+    isEmpty,
     add,
     append,
     prepend,

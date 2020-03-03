@@ -1,54 +1,65 @@
 import { makeLinkedList } from "../makeLinkedList"
 import { IndexOutOfBoundsError } from "../errors"
 
-describe("when invoking the make fn...", () => {
-  it("should contain the initial specified values", () => {
-    const linkedList = makeLinkedList("0", "1")
-    const fn = jest.fn()
-    for (const value of linkedList.values()) {
-      fn(value)
-    }
-    expect(fn).toBeCalledTimes(2)
-    expect(fn).toBeCalledWith("0")
-    expect(fn).toBeCalledWith("1")
+describe("with an empty linkedList...", () => {
+  it("should have no top value", () => {
+    const linkedList = makeLinkedList<number>()
+    expect(linkedList.get(0)).toBeUndefined()
   })
 
-  it("should be empty with no specified values", () => {
-    const linkedList = makeLinkedList()
+  it("should be empty", () => {
+    const linkedList = makeLinkedList<number>()
+    expect(linkedList.isEmpty()).toBe(true)
+  })
+
+  it("should have no values", () => {
+    const linkedList = makeLinkedList<number>()
     const fn = jest.fn()
     for (const value of linkedList.values()) {
       fn(value)
     }
     expect(fn).toBeCalledTimes(0)
   })
-})
 
-describe("when invoking the element fn...", () => {
-  it("should retrieve the first item", () => {
-    const linkedList = makeLinkedList("0", "1")
-    expect(linkedList.element()).toBe("0")
-  })
-
-  it("should retrieve null when the head is not specified", () => {
+  it("should have no *element*", () => {
     const linkedList = makeLinkedList()
     expect(linkedList.element()).toBeUndefined()
   })
 })
 
-describe("when invoking the get fn...", () => {
-  it("should retrieve the item at the specified index", () => {
-    const linkedList = makeLinkedList("0", "1", "2")
-    expect(linkedList.get(1)).toBe("1")
+describe("when defined with initial elements...", () => {
+  it("should contain the initial specified values", () => {
+    const linkedList = makeLinkedList("0", "1")
+    const fn = jest.fn()
+    for (const value of linkedList.values()) {
+      fn(value)
+    }
+    expect(linkedList.isEmpty()).toBe(false)
+    expect(fn).toBeCalledTimes(2)
+    expect(fn).toBeCalledWith("0")
+    expect(fn).toBeCalledWith("1")
+  })
+})
+
+describe("with multiple values...", () => {
+  it("should retrieve the first item", () => {
+    const linkedList = makeLinkedList("0", "1")
+    expect(linkedList.element()).toBe("0")
   })
 
   it("should retrieve undefined when item is not available", () => {
     const linkedList = makeLinkedList("0")
     expect(linkedList.get(1)).toBeUndefined()
   })
+
+  it("should retrieve the item at the specified index", () => {
+    const linkedList = makeLinkedList("0", "1", "2")
+    expect(linkedList.get(1)).toBe("1")
+  })
 })
 
 describe("when invoking the add fn...", () => {
-  it("should add the item and mantain the previous ones", () => {
+  it("should add the item and mantain the previous values", () => {
     const linkedList = makeLinkedList("0", "2")
     linkedList.add(1, "1")
     expect(linkedList.get(0)).toBe("0")
