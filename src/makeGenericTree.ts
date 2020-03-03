@@ -1,22 +1,23 @@
-type TreeNode<T> = {
+export type TreeNode<T> = {
   value: T
   children: () => Generator<TreeNode<T>, void, unknown>
-  addChild: (node: TreeNode<T>) => void
+  addChild: (...node: TreeNode<T>[]) => void
   getDepth: () => number
   removeChild: (node: TreeNode<T>) => void
 }
 
 export type GenericTree<T> = {
-  root: TreeNode<T> | null
-  getDepth(): number | undefined
+  setRoot: (node: TreeNode<T>) => void
+  getRoot: () => TreeNode<T> | null
+  getDepth: () => number | undefined
 }
 
 export function makeTreeNode<T>(nodeValue: T): TreeNode<T> {
   const value = nodeValue
   const _children: TreeNode<T>[] = []
 
-  function addChild(node: TreeNode<T>) {
-    _children.push(node)
+  function addChild(...node: TreeNode<T>[]) {
+    _children.push(...node)
   }
 
   function removeChild(node: TreeNode<T>) {
@@ -31,7 +32,7 @@ export function makeTreeNode<T>(nodeValue: T): TreeNode<T> {
   }
 
   function getDepth() {
-    let maxDepth = 0
+    let maxDepth = 1
     for (const child of children()) {
       const depth = child.getDepth() + 1
       if (depth > maxDepth) maxDepth = depth
@@ -49,11 +50,19 @@ export function makeTreeNode<T>(nodeValue: T): TreeNode<T> {
 }
 
 export function makeGenericTree<T>(): GenericTree<T> {
-  const root: TreeNode<T> | null = null
+  let rootNode: TreeNode<T> | null = null
 
-  function getDepth() {
-    return root?.getDepth()
+  function setRoot(node: TreeNode<T>) {
+    rootNode = node
   }
 
-  return { root, getDepth }
+  function getRoot() {
+    return rootNode
+  }
+
+  function getDepth() {
+    return rootNode?.getDepth() ?? 0
+  }
+
+  return { setRoot, getRoot, getDepth }
 }
