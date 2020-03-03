@@ -1,4 +1,4 @@
-import { IndexOutOfBoundsError } from "./errors"
+import { IndexOutOfBoundsError } from "./utils/errors"
 
 type Node<T> = {
   value: T

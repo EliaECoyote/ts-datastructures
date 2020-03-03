@@ -1,5 +1,5 @@
 import { makeQueue } from "../makeQueue"
-import { NoSuchElementError } from "../errors"
+import { NoSuchElementError } from "../utils/errors"
 
 describe("with an empty queue...", () => {
   it("should have no top value", () => {

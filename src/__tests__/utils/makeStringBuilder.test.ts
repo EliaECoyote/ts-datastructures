@@ -1,4 +1,4 @@
-import { makeStringBuilder } from "../makeStringBuilder"
+import { makeStringBuilder } from "../../utils/makeStringBuilder"
 
 describe("makeStringBuilder", () => {
   it("should return empty string when append is not called", () => {
