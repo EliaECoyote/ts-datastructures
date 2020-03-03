@@ -1,5 +1,5 @@
 import { makeLinkedList } from "../makeLinkedList"
-import { IndexOutOfBoundsError } from "../errors"
+import { IndexOutOfBoundsError } from "../utils/errors"
 
 describe("with an empty linkedList...", () => {
   it("should have no top value", () => {

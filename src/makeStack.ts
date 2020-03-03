@@ -1,5 +1,5 @@
 import { makeLinkedList } from "./makeLinkedList"
-import { EmptyStackError } from "./errors"
+import { EmptyStackError } from "./utils/errors"
 
 export type Stack<T> = {
   peek: () => T | undefined

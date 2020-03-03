@@ -1,5 +1,5 @@
 import { makeStack } from "../makeStack"
-import { EmptyStackError } from "../errors"
+import { EmptyStackError } from "../utils/errors"
 
 describe("with an empty stack...", () => {
   it("should have no top value", () => {

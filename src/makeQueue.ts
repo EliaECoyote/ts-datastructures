@@ -1,5 +1,5 @@
 import { makeLinkedList } from "./makeLinkedList"
-import { NoSuchElementError } from "./errors"
+import { NoSuchElementError } from "./utils/errors"
 
 export function makeQueue<T>(...initialValues: T[]) {
   const linkedList = makeLinkedList<T>(...initialValues)
