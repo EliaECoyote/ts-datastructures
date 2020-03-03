@@ -12,9 +12,9 @@ export function makeQueue<T>(...initialValues: T[]) {
   }
 
   /**
-   * Adds item to the end of the queue
+   * Enqueues item to the end of the queue
    */
-  function add(value: T) {
+  function enqueue(value: T) {
     linkedList.append(value)
   }
 
@@ -22,12 +22,11 @@ export function makeQueue<T>(...initialValues: T[]) {
    * Removes the first item in the queue
    * @throws {NoSuchElementError}
    */
-  function remove() {
-    try {
-      linkedList.remove(0)
-    } catch (_error) {
-      throw new NoSuchElementError()
-    }
+  function dequeue() {
+    if (linkedList.isEmpty()) throw new NoSuchElementError()
+    const item = peek()
+    linkedList.remove(0)
+    return item
   }
 
   /**
@@ -39,8 +38,8 @@ export function makeQueue<T>(...initialValues: T[]) {
 
   return {
     peek,
-    add,
-    remove,
+    enqueue,
+    dequeue,
     isEmpty,
   }
 }
