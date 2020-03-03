@@ -14,7 +14,7 @@ describe("with an empty queue...", () => {
 
   it("should throw during removal operation", () => {
     const queue = makeQueue()
-    expect(queue.remove).toThrowError(NoSuchElementError)
+    expect(queue.dequeue).toThrowError(NoSuchElementError)
   })
 })
 
@@ -28,7 +28,7 @@ describe("when adding single element...", () => {
   it("should be empty after element removal", () => {
     const queue = makeQueue()
     queue.enqueue(1)
-    queue.remove()
+    queue.dequeue()
     expect(queue.isEmpty()).toBe(true)
   })
 })
@@ -39,10 +39,8 @@ describe("when adding multiple values", () => {
     queue.enqueue(1)
     queue.enqueue(2)
     queue.enqueue(3)
-    expect(queue.peek()).toBe(1)
-    queue.remove()
-    expect(queue.peek()).toBe(2)
-    queue.remove()
+    expect(queue.dequeue()).toBe(1)
+    expect(queue.dequeue()).toBe(2)
     expect(queue.peek()).toBe(3)
   })
 })
@@ -50,10 +48,8 @@ describe("when adding multiple values", () => {
 describe("when defined with initial elements...", () => {
   it("should be in FIFO order", () => {
     const queue = makeQueue(1, 2, 3)
-    expect(queue.peek()).toBe(1)
-    queue.remove()
-    expect(queue.peek()).toBe(2)
-    queue.remove()
+    expect(queue.dequeue()).toBe(1)
+    expect(queue.dequeue()).toBe(2)
     expect(queue.peek()).toBe(3)
   })
 })

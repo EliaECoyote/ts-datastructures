@@ -22,12 +22,11 @@ export function makeQueue<T>(...initialValues: T[]) {
    * Removes the first item in the queue
    * @throws {NoSuchElementError}
    */
-  function remove() {
-    try {
-      linkedList.remove(0)
-    } catch (_error) {
-      throw new NoSuchElementError()
-    }
+  function dequeue() {
+    if (linkedList.isEmpty()) throw new NoSuchElementError()
+    const item = peek()
+    linkedList.remove(0)
+    return item
   }
 
   /**
@@ -40,7 +39,7 @@ export function makeQueue<T>(...initialValues: T[]) {
   return {
     peek,
     enqueue,
-    remove,
+    dequeue,
     isEmpty,
   }
 }
