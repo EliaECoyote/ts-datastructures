@@ -12,9 +12,9 @@ export function makeQueue<T>(...initialValues: T[]) {
   }
 
   /**
-   * Adds item to the end of the queue
+   * Enqueues item to the end of the queue
    */
-  function add(value: T) {
+  function enqueue(value: T) {
     linkedList.append(value)
   }
 
@@ -39,7 +39,7 @@ export function makeQueue<T>(...initialValues: T[]) {
 
   return {
     peek,
-    add,
+    enqueue,
     remove,
     isEmpty,
   }

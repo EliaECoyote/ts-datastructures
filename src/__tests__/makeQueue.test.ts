@@ -21,13 +21,13 @@ describe("with an empty queue...", () => {
 describe("when adding single element...", () => {
   it("should be retrievable through peek", () => {
     const queue = makeQueue()
-    queue.add(1)
+    queue.enqueue(1)
     expect(queue.peek()).toBe(1)
   })
 
   it("should be empty after element removal", () => {
     const queue = makeQueue()
-    queue.add(1)
+    queue.enqueue(1)
     queue.remove()
     expect(queue.isEmpty()).toBe(true)
   })
@@ -36,9 +36,9 @@ describe("when adding single element...", () => {
 describe("when adding multiple values", () => {
   it("should be in FIFO order", () => {
     const queue = makeQueue()
-    queue.add(1)
-    queue.add(2)
-    queue.add(3)
+    queue.enqueue(1)
+    queue.enqueue(2)
+    queue.enqueue(3)
     expect(queue.peek()).toBe(1)
     queue.remove()
     expect(queue.peek()).toBe(2)
