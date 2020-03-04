@@ -26,3 +26,8 @@ rules:
       singleline:
         delimiter: comma
         requireLast: true
+overrides:
+  - files:
+      - "**/*.test.ts"
+    rules:
+      "@typescript-eslint/no-non-null-assertion": "off"
