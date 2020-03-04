@@ -22,12 +22,10 @@ describe("with a defined root...", () => {
   it("should add nodes correctly", () => {
     const tree = makeGenericTree<number>()
     tree.setRoot(makeTreeNode(1))
-    const root = tree.getRoot()
-    if (root == null) fail()
     const child = makeTreeNode(2)
-    root.addChild(child)
+    tree.getRoot()?.addChild(child)
     const mock = jest.fn()
-    for (const node of root.children()) {
+    for (const node of tree.getRoot()!.children()) {
       mock(node)
     }
     expect(mock).toBeCalledTimes(1)
@@ -49,14 +47,12 @@ describe("with a defined root...", () => {
   it("should add child nodes to child nodes correctly", () => {
     const tree = makeGenericTree<number>()
     tree.setRoot(makeTreeNode(1))
-    const root = tree.getRoot()
-    if (root == null) fail()
     const child = makeTreeNode(2)
-    root.addChild(child)
+    tree.getRoot()?.addChild(child)
     child.addChild(makeTreeNode(3), makeTreeNode(4))
     const mockFn = jest.fn()
     let firstRootChild: TreeNode<number> | null = null
-    for (const node of root.children()) {
+    for (const node of tree.getRoot()!.children()) {
       firstRootChild = node
     }
     if (firstRootChild == null) fail()
