@@ -68,9 +68,9 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    * ```
    */
   function* inOrderVertices() {
-    left?.inOrderVertices()
+    if (left) yield* left.inOrderVertices()
     yield value
-    right?.inOrderVertices()
+    if (right) yield* right.inOrderVertices()
   }
 
   /**
@@ -87,8 +87,8 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    */
   function* preOrderVertices() {
     yield value
-    left?.preOrderVertices()
-    right?.preOrderVertices()
+    if (left) yield* left.preOrderVertices()
+    if (right) yield* right.preOrderVertices()
   }
 
   /**
@@ -104,8 +104,8 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    * ```
    */
   function* postOrderVertices() {
-    left?.postOrderVertices()
-    right?.postOrderVertices()
+    if (left) yield* left.postOrderVertices()
+    if (right) yield* right.postOrderVertices()
     yield value
   }
 
