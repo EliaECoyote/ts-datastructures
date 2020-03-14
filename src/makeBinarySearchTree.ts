@@ -1,52 +1,24 @@
-import { makeBinaryTree } from "./makeBinaryTree"
+import {
+  makeBinaryTree,
+  makeBinaryTreeNode,
+  BinaryTree,
+  BinaryTreeNode,
+} from "./makeBinaryTree"
 
-export type BinaryTreeNode<T> = {
-  value: T
-  getDepth: () => number
-  setLeft: (node: BinaryTreeNode<T> | null) => void
-  setRight: (node: BinaryTreeNode<T> | null) => void
-  getLeft: () => BinaryTreeNode<T> | null
-  getRight: () => BinaryTreeNode<T> | null
+export type BinarySearchTreeNode<T> = BinaryTreeNode<T> & {}
+
+export type BinarySearchTree<T> = BinaryTree<T> & {
+  search: (value: T) => BinaryTreeNode<T> | null
+  insert: (value: T) => void
 }
 
-export type BinaryTree<T> = {
-  setRoot: (node: BinaryTreeNode<T>) => void
-  getRoot: () => BinaryTreeNode<T> | null
-  getDepth: () => number
-}
-
-export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
-  const value = nodeValue
-  let left: BinaryTreeNode<T> | null = null
-  let right: BinaryTreeNode<T> | null = null
-
-  function getDepth() {
-    return Math.max(left?.getDepth() ?? 0, right?.getDepth() ?? 0) + 1
-  }
-
-  function setLeft(node: BinaryTreeNode<T> | null) {
-    left = node
-  }
-
-  function setRight(node: BinaryTreeNode<T> | null) {
-    right = node
-  }
-
-  function getLeft() {
-    return left
-  }
-
-  function getRight() {
-    return right
-  }
+export function makeBinarySearchTreeNode<T>(
+  nodeValue: T,
+): BinarySearchTreeNode<T> {
+  const treeNode = makeBinaryTreeNode(nodeValue)
 
   return {
-    value,
-    getDepth,
-    setLeft,
-    setRight,
-    getLeft,
-    getRight,
+    ...treeNode,
   }
 }
 
@@ -59,17 +31,33 @@ export function makeBinarySearchTree<T>() {
     return _search(root, value)
   }
 
-  // function insert(value: T) {}
+  /**
+   * Inserts the value as a leaf vertex.
+   */
+  function insert(value: T) {
+    let node = binaryTree.getRoot()
+    if (node == null) binaryTree.setRoot(makeBinarySearchTreeNode(value))
+    while (node != null) {
+      if (value === node.value) return
+      else if (value > node.value) {
+        const nextNode = node.getRight()
+        if (nextNode != null) node = nextNode
+        else return node.setRight(makeBinarySearchTreeNode(value))
+      } else if (value < node.value) {
+        const nextNode = node.getLeft()
+        if (nextNode != null) node = nextNode
+        else return node.setLeft(makeBinarySearchTreeNode(value))
+      }
+    }
+  }
 
-  return { ...binaryTree, search }
+  return { ...binaryTree, search, insert }
 }
 
-export const makeBinarySearchTreeNode = makeBinaryTreeNode
-
 function _search<T>(
-  node: BinaryTreeNode<T>,
+  node: BinarySearchTreeNode<T>,
   value: T,
-): BinaryTreeNode<T> | null {
+): BinarySearchTreeNode<T> | null {
   if (value === node.value) return node
   const nextNode = value > node.value ? node.getRight() : node.getLeft()
   return nextNode ? _search(nextNode, value) : null
