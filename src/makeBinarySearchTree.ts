@@ -12,11 +12,8 @@ export type BinarySearchTree<T> = BinaryTree<T> & {
   insert: (value: T) => void
 }
 
-export function makeBinarySearchTreeNode<T>(
-  nodeValue: T,
-): BinarySearchTreeNode<T> {
+function makeBinarySearchTreeNode<T>(nodeValue: T): BinarySearchTreeNode<T> {
   const treeNode = makeBinaryTreeNode(nodeValue)
-
   return {
     ...treeNode,
   }
@@ -54,6 +51,10 @@ export function makeBinarySearchTree<T>() {
   return { ...binaryTree, search, insert }
 }
 
+/**
+ * Helper that searches recursively for the node with
+ * the specified value.
+ */
 function _search<T>(
   node: BinarySearchTreeNode<T>,
   value: T,

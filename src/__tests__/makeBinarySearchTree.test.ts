@@ -1,13 +1,15 @@
-import {
-  makeBinarySearchTree,
-  makeBinarySearchTreeNode,
-} from "../makeBinarySearchTree"
+import { makeBinarySearchTree } from "../makeBinarySearchTree"
 
 describe("with an empty tree...", () => {
   it("should return null on search", () => {
-    const tree = makeBinarySearchTree()
+    const tree = makeBinarySearchTree<number>()
     expect(tree.search(1)).toBe(null)
-    expect(tree.search(null)).toBe(null)
+  })
+
+  it("should insert value in root node", () => {
+    const tree = makeBinarySearchTree<number>()
+    tree.insert(1)
+    expect(tree.getRoot()?.value).toBe(1)
   })
 })
 
@@ -23,28 +25,36 @@ describe("given a predefined filled tree...", () => {
       10  30  50  70
     */
     tree = makeBinarySearchTree<number>()
-    tree.setRoot(makeBinarySearchTreeNode(40))
-    tree.getRoot()?.setLeft(makeBinarySearchTreeNode(20))
-    tree
-      .getRoot()
-      ?.getLeft()
-      ?.setLeft(makeBinarySearchTreeNode(10))
-    tree
-      .getRoot()
-      ?.getLeft()
-      ?.setRight(makeBinarySearchTreeNode(30))
-    tree.getRoot()?.setRight(makeBinarySearchTreeNode(60))
-    tree
-      .getRoot()
-      ?.getRight()
-      ?.setLeft(makeBinarySearchTreeNode(50))
-    tree
-      .getRoot()
-      ?.getRight()
-      ?.setRight(makeBinarySearchTreeNode(70))
+    tree.insert(40)
+    tree.insert(20)
+    tree.insert(60)
+    tree.insert(10)
+    tree.insert(30)
+    tree.insert(50)
+    tree.insert(70)
   })
 
-  it("should insert lowest value as the leftmost leaft", () => {
+  it("shoud retrieve ascending items when traversing in-order", () => {
+    const mockFn = jest.fn()
+    for (const key of tree.getRoot()!.inOrderVertices()) {
+      mockFn(key)
+    }
+    expect(mockFn.mock.calls).toEqual([
+      [10],
+      [20],
+      [30],
+      [40],
+      [50],
+      [60],
+      [70],
+    ])
+  })
+
+  it("should have correct depth", () => {
+    expect(tree.getDepth()).toBe(3)
+  })
+
+  it("should insert lowest value as the leftmost leaf", () => {
     tree.insert(5)
     expect(
       tree
@@ -66,7 +76,7 @@ describe("given a predefined filled tree...", () => {
     ).toBe(75)
   })
 
-  it("should insert in-between values as the rightmost leaft", () => {
+  it("should insert in-between values as the rightmost leaf", () => {
     tree.insert(45)
     tree.insert(25)
     expect(
