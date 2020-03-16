@@ -4,6 +4,8 @@ export type BinaryTreeNode<T> = {
   inOrderVertices: () => Generator<T, void, unknown>
   preOrderVertices: () => Generator<T, void, unknown>
   postOrderVertices: () => Generator<T, void, unknown>
+  getParent: () => BinaryTreeNode<T> | null
+  _setParent: (node: BinaryTreeNode<T> | null) => void
   setLeft: (node: BinaryTreeNode<T> | null) => void
   setRight: (node: BinaryTreeNode<T> | null) => void
   getLeft: () => BinaryTreeNode<T> | null
@@ -20,6 +22,7 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
   const value = nodeValue
   let left: BinaryTreeNode<T> | null = null
   let right: BinaryTreeNode<T> | null = null
+  let parent: BinaryTreeNode<T> | null = null
 
   /**
    * Retrieves the maximum depth of the tree.
@@ -33,6 +36,7 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    */
   function setLeft(node: BinaryTreeNode<T> | null) {
     left = node
+    left?._setParent(treeNode)
   }
 
   /**
@@ -40,6 +44,7 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    */
   function setRight(node: BinaryTreeNode<T> | null) {
     right = node
+    right?._setParent(treeNode)
   }
 
   /**
@@ -57,12 +62,27 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
   }
 
   /**
+   * Retrieves the vertex **parent**.
+   */
+  function getParent() {
+    return parent
+  }
+
+  /**
+   * @private
+   * Sets the node's parent node.
+   */
+  function _setParent(node: BinaryTreeNode<T> | null) {
+    parent = node
+  }
+
+  /**
    * Retrieves an Iterable that loads the node **left** branch
    * vertices values, then the **current** vertex value, and then
    * the **right** branch vertices values
    * Syntax:
    * ```
-   * for (const value of node.inOrderVertices()) {
+   * for (const key of node.inOrderVertices()) {
    *   ...
    * }
    * ```
@@ -80,7 +100,7 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    * Root vertex value is always the first one to be loaded
    * Syntax:
    * ```
-   * for (const value of node.preOrderVertices()) {
+   * for (const key of node.preOrderVertices()) {
    *   ...
    * }
    * ```
@@ -98,7 +118,7 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    * Root vertex value is always the last one to be loaded
    * Syntax:
    * ```
-   * for (const value of node.postOrderVertices()) {
+   * for (const key of node.postOrderVertices()) {
    *   ...
    * }
    * ```
@@ -109,17 +129,20 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
     yield value
   }
 
-  return {
+  const treeNode = {
     value,
     getDepth,
     setLeft,
     setRight,
     getLeft,
     getRight,
+    getParent,
+    _setParent,
     inOrderVertices,
     preOrderVertices,
     postOrderVertices,
   }
+  return treeNode
 }
 
 export function makeBinaryTree<T>(): BinaryTree<T> {
