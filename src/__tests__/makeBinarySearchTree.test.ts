@@ -100,7 +100,7 @@ describe("given a predefined filled tree...", () => {
       expect(mockFn.mock.calls).toEqual([[10], [20], [40], [50], [60], [70]])
     })
 
-    it("should remove node with single branch correctly", () => {
+    it("should remove single branch node correctly", () => {
       const tree = makePredefinedTree()
       tree.insert(55)
       tree.remove(50)
@@ -129,7 +129,7 @@ describe("given a predefined filled tree...", () => {
       expect(mockFn.mock.calls).toEqual([[10], [20], [30], [40], [50], [70]])
     })
 
-    it("should remove node with both branches (depth > 1) correctly", () => {
+    it("should remove node with both branches (w depth > 1) correctly", () => {
       const tree = makePredefinedTree()
       tree.insert(55)
       tree.insert(45)

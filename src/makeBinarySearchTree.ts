@@ -55,25 +55,11 @@ export function makeBinarySearchTree<T>() {
     const root = binaryTree.getRoot()
     if (root == null) return false
 
-    // Finds the node with the specified value and
-    // the branch direction where that node is located.
-    let branch: "left" | "right" = "left"
-    let node = root
-    while (node?.value != value) {
-      let nextNode = null
-      if (value > node.value) {
-        nextNode = node.getRight()
-        branch = "right"
-      } else {
-        nextNode = node.getLeft()
-        branch = "left"
-      }
-      if (nextNode == null) return false
-      node = nextNode
-    }
+    // Finds the node with the specified value.
+    const node = search(value)
 
-    // Retrieves the node's children data details.
-    if (node == null) return
+    // Retrieves the node's children details.
+    if (node == null) return false
     const childrenDetails = getNodeChildrenDetails(node)
 
     // Sets *replacementNode*, which will replace the node
@@ -99,13 +85,17 @@ export function makeBinarySearchTree<T>() {
         while (lowestBiggerLeaf?.getLeft() != null) {
           lowestBiggerLeaf = lowestBiggerLeaf.getLeft()
         }
-        // Remove the *lowestBiggerLeaf* from it's original position
-        lowestBiggerLeaf?.getParent()?.setLeft(null)
+        // Removes the *lowestBiggerLeaf* from it's original position,
+        // and updates the leaf with the node right & left branches
+        if (lowestBiggerLeaf?.value) remove(lowestBiggerLeaf.value)
+        lowestBiggerLeaf?.setLeft(node.getLeft())
+        lowestBiggerLeaf?.setRight(node.getRight())
         replacementNode = lowestBiggerLeaf
         break
     }
 
     // replace the actual node
+    const branch = node.getParent()?.getLeft() === node ? "left" : "right"
     switch (branch) {
       case "left":
         node.getParent()?.setLeft(replacementNode)
