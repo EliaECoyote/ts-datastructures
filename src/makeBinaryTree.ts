@@ -1,9 +1,9 @@
 export type BinaryTreeNode<T> = {
   value: T
   getDepth: () => number
-  inOrderVertices: () => Generator<T, void, unknown>
-  preOrderVertices: () => Generator<T, void, unknown>
-  postOrderVertices: () => Generator<T, void, unknown>
+  inOrderKeys: () => Generator<T, void, unknown>
+  preOrderKeys: () => Generator<T, void, unknown>
+  postOrderKeys: () => Generator<T, void, unknown>
   getParent: () => BinaryTreeNode<T> | null
   _setParent: (node: BinaryTreeNode<T> | null) => void
   setLeft: (node: BinaryTreeNode<T> | null) => void
@@ -82,15 +82,15 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    * the **right** branch vertices values
    * Syntax:
    * ```
-   * for (const key of node.inOrderVertices()) {
+   * for (const key of node.inOrderKeys()) {
    *   ...
    * }
    * ```
    */
-  function* inOrderVertices() {
-    if (left) yield* left.inOrderVertices()
+  function* inOrderKeys() {
+    if (left) yield* left.inOrderKeys()
     yield value
-    if (right) yield* right.inOrderVertices()
+    if (right) yield* right.inOrderKeys()
   }
 
   /**
@@ -100,15 +100,15 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    * Root vertex value is always the first one to be loaded
    * Syntax:
    * ```
-   * for (const key of node.preOrderVertices()) {
+   * for (const key of node.preOrderKeys()) {
    *   ...
    * }
    * ```
    */
-  function* preOrderVertices() {
+  function* preOrderKeys() {
     yield value
-    if (left) yield* left.preOrderVertices()
-    if (right) yield* right.preOrderVertices()
+    if (left) yield* left.preOrderKeys()
+    if (right) yield* right.preOrderKeys()
   }
 
   /**
@@ -118,14 +118,14 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
    * Root vertex value is always the last one to be loaded
    * Syntax:
    * ```
-   * for (const key of node.postOrderVertices()) {
+   * for (const key of node.postOrderKeys()) {
    *   ...
    * }
    * ```
    */
-  function* postOrderVertices() {
-    if (left) yield* left.postOrderVertices()
-    if (right) yield* right.postOrderVertices()
+  function* postOrderKeys() {
+    if (left) yield* left.postOrderKeys()
+    if (right) yield* right.postOrderKeys()
     yield value
   }
 
@@ -138,9 +138,9 @@ export function makeBinaryTreeNode<T>(nodeValue: T): BinaryTreeNode<T> {
     getRight,
     getParent,
     _setParent,
-    inOrderVertices,
-    preOrderVertices,
-    postOrderVertices,
+    inOrderKeys,
+    preOrderKeys,
+    postOrderKeys,
   }
   return treeNode
 }

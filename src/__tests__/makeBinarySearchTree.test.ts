@@ -17,7 +17,7 @@ describe("given a predefined filled tree...", () => {
   it("shoud retrieve ascending items when traversing in-order", () => {
     const tree = makePredefinedTree()
     const mockFn = jest.fn()
-    for (const key of tree.getRoot()!.inOrderVertices()) {
+    for (const key of tree.getRoot()!.inOrderKeys()) {
       mockFn(key)
     }
     expect(mockFn.mock.calls).toEqual([
@@ -94,7 +94,7 @@ describe("given a predefined filled tree...", () => {
       const tree = makePredefinedTree()
       tree.remove(30)
       const mockFn = jest.fn()
-      for (const key of tree.getRoot()!.inOrderVertices()) {
+      for (const key of tree.getRoot()!.inOrderKeys()) {
         mockFn(key)
       }
       expect(mockFn.mock.calls).toEqual([[10], [20], [40], [50], [60], [70]])
@@ -105,7 +105,7 @@ describe("given a predefined filled tree...", () => {
       tree.insert(55)
       tree.remove(50)
       const mockFn = jest.fn()
-      for (const key of tree.getRoot()!.inOrderVertices()) {
+      for (const key of tree.getRoot()!.inOrderKeys()) {
         mockFn(key)
       }
       expect(mockFn.mock.calls).toEqual([
@@ -123,7 +123,7 @@ describe("given a predefined filled tree...", () => {
       const tree = makePredefinedTree()
       tree.remove(60)
       const mockFn = jest.fn()
-      for (const key of tree.getRoot()!.inOrderVertices()) {
+      for (const key of tree.getRoot()!.inOrderKeys()) {
         mockFn(key)
       }
       expect(mockFn.mock.calls).toEqual([[10], [20], [30], [40], [50], [70]])
@@ -137,7 +137,7 @@ describe("given a predefined filled tree...", () => {
       tree.insert(75)
       tree.remove(60)
       const mockFn = jest.fn()
-      for (const key of tree.getRoot()!.inOrderVertices()) {
+      for (const key of tree.getRoot()!.inOrderKeys()) {
         mockFn(key)
       }
       expect(mockFn.mock.calls).toEqual([

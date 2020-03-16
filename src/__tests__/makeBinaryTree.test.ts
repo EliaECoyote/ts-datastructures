@@ -88,7 +88,7 @@ describe("given a predefined filled tree...", () => {
 
   it("should traverse in-order values correctly", () => {
     const mockFn = jest.fn()
-    for (const value of tree.getRoot()!.inOrderVertices()) {
+    for (const value of tree.getRoot()!.inOrderKeys()) {
       mockFn(value)
     }
     expect(mockFn.mock.calls).toEqual([[1], [2], [3], [4], [5], [6], [7]])
@@ -96,7 +96,7 @@ describe("given a predefined filled tree...", () => {
 
   it("should traverse pre-order values correctly", () => {
     const mockFn = jest.fn()
-    for (const value of tree.getRoot()!.preOrderVertices()) {
+    for (const value of tree.getRoot()!.preOrderKeys()) {
       mockFn(value)
     }
     expect(mockFn.mock.calls).toEqual([[4], [2], [1], [3], [6], [5], [7]])
@@ -104,7 +104,7 @@ describe("given a predefined filled tree...", () => {
 
   it("should traverse post-order values correctly", () => {
     const mockFn = jest.fn()
-    for (const value of tree.getRoot()!.postOrderVertices()) {
+    for (const value of tree.getRoot()!.postOrderKeys()) {
       mockFn(value)
     }
     expect(mockFn.mock.calls).toEqual([[1], [3], [2], [5], [7], [6], [4]])
