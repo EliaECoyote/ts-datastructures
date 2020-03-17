@@ -60,6 +60,57 @@ describe("when adding multiple nodes...", () => {
   })
 })
 
+describe("given a predefined filled tree...", () => {
+  let tree = makeBinaryTree<number>()
+
+  beforeEach(() => {
+    tree = makeBinaryTree<number>()
+    tree.setRoot(makeBinaryTreeNode(4))
+    tree.getRoot()?.setLeft(makeBinaryTreeNode(2))
+    tree
+      .getRoot()
+      ?.getLeft()
+      ?.setLeft(makeBinaryTreeNode(1))
+    tree
+      .getRoot()
+      ?.getLeft()
+      ?.setRight(makeBinaryTreeNode(3))
+    tree.getRoot()?.setRight(makeBinaryTreeNode(6))
+    tree
+      .getRoot()
+      ?.getRight()
+      ?.setLeft(makeBinaryTreeNode(5))
+    tree
+      .getRoot()
+      ?.getRight()
+      ?.setRight(makeBinaryTreeNode(7))
+  })
+
+  it("should traverse in-order values correctly", () => {
+    const mockFn = jest.fn()
+    for (const value of tree.getRoot()!.inOrderKeys()) {
+      mockFn(value)
+    }
+    expect(mockFn.mock.calls).toEqual([[1], [2], [3], [4], [5], [6], [7]])
+  })
+
+  it("should traverse pre-order values correctly", () => {
+    const mockFn = jest.fn()
+    for (const value of tree.getRoot()!.preOrderKeys()) {
+      mockFn(value)
+    }
+    expect(mockFn.mock.calls).toEqual([[4], [2], [1], [3], [6], [5], [7]])
+  })
+
+  it("should traverse post-order values correctly", () => {
+    const mockFn = jest.fn()
+    for (const value of tree.getRoot()!.postOrderKeys()) {
+      mockFn(value)
+    }
+    expect(mockFn.mock.calls).toEqual([[1], [3], [2], [5], [7], [6], [4]])
+  })
+})
+
 describe("when removing nodes...", () => {
   it("should decrease tree depth accordingly", () => {
     const tree = makeBinaryTree<number>()
